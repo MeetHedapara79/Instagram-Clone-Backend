@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma";
 import { translation } from "../language/translation";
 import { checkPwd } from "../utils/pwd";
 import { responseStatusCode } from "../language/constanat";
