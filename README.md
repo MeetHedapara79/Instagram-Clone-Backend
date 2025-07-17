@@ -27,30 +27,30 @@ This is the backend of a full-stack Instagram clone built with **Node.js**, **Ex
 
 ## 📦 Installation
 
-git clone https://github.com/MeetHedapara79/Instagram-Clone-Backend.git
-cd Instagram-Clone-Backend
-npm install
+- git clone https://github.com/MeetHedapara79/Instagram-Clone-Backend.git
+- cd Instagram-Clone-Backend
+- npm install
 
 ## ⚙️ Environment Variables
 
-DATABASE_URL="your_mysql_url"
-JWT_SECRET="your_jwt_secret"
-BUCKET_PATH="your_bucket_path"
-BUCKET_NAME="your_bucket_name"
-AWS_ACCESSKEY="your_aws_access_key"
-AWS_SECRET_ACCESSKEY="your_aws_secret_key"
+- DATABASE_URL="your_mysql_url"
+- JWT_SECRET="your_jwt_secret"
+- BUCKET_PATH="your_bucket_path"
+- BUCKET_NAME="your_bucket_name"
+- AWS_ACCESSKEY="your_aws_access_key"
+- AWS_SECRET_ACCESSKEY="your_aws_secret_key"
 
 ## 🧪 Development
 
-npm run start
+- npm run start
 
 ## 🏗 Production Build
 
-npm run build
-npm run start:prod
+- npm run build
+- npm run start:prod
 
 ## 🗃 Prisma ORM
 
-npx prisma generate
-npx prisma migrate dev
-npx prisma studio
+- npx prisma generate
+- npx prisma migrate dev
+- npx prisma studio

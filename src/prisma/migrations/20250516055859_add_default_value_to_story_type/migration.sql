@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `story` MODIFY `type` ENUM('IMAGE', 'VIDEO') NOT NULL DEFAULT 'IMAGE';

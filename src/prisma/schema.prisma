@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String         @id @default(cuid())
+  email_phone           String         @unique
+  username              String         @unique
+  password              String
+  recoveryCode          String?
+  followers             Json           @default("[]")
+  following             Json           @default("[]")
+  profilePic            String?
+  bio                   String?
+  Post                  Post[]
+  comments              Comment[]
+  PostLike              PostLike[]
+  messagesSent          Message[]      @relation("SenderMessages")
+  messagesReceived      Message[]      @relation("ReceiverMessages")
+  followingNotification Notification[] @relation("followingNotification")
+  followerNotification  Notification[] @relation("followerNotification")
+  taggedUsers           Tag[]
+  stories               Story[]
+  storyViews            StoryView[]
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@map("user")
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  content     String
+  caption     String?
+  location    String?
+  userId      String
+  likes       Int        @default(0)
+  comments    Comment[]
+  PostLike    PostLike[]
+  messages    Message[]  @relation("PostMessages")
+  taggedPosts Tag[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("post")
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  following   User     @relation("followingNotification", fields: [followingId], references: [id])
+  follower    User     @relation("followerNotification", fields: [followerId], references: [id])
+  isConfirmed Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("notification")
+}
+
+model PostLike {
+  postId String
+  userId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  likedAt DateTime @default(now())
+
+  @@id([postId, userId])
+  @@map("postlike")
+}
+
+model Comment {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    String
+  content   String
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+
+  @@map("comment")
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  content        String
+  senderId       String
+  receiverId     String
+  timestamp      DateTime @default(now())
+  conversationId String
+  readStatus     Boolean  @default(false)
+  sender         User     @relation("SenderMessages", fields: [senderId], references: [id])
+  receiver       User     @relation("ReceiverMessages", fields: [receiverId], references: [id])
+  postId         String?
+  post           Post?    @relation("PostMessages", fields: [postId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("message")
+}
+
+model Tag {
+  postId String
+  userId String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  taggedAt DateTime @default(now())
+
+  @@id([postId, userId])
+  @@map("tag")
+}
+
+model Story {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  mediaUrl  String
+  caption   String?
+  type      StoryType   @default(IMAGE)
+  viewers   StoryView[]
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  expiresAt DateTime
+
+  @@map("story")
+}
+
+enum StoryType {
+  IMAGE
+  VIDEO
+}
+
+model StoryView {
+  storyId  String
+  viewerId String
+  viewedAt DateTime @default(now())
+
+  story  Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  viewer User  @relation(fields: [viewerId], references: [id], onDelete: Cascade)
+
+  @@id([storyId, viewerId])
+  @@map("story_view")
+}
