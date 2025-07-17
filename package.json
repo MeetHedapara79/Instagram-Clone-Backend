@@ -31,9 +31,7 @@
     "socket.io": "^4.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
-    "zod": "^3.24.3"
-  },
-  "devDependencies": {
+    "zod": "^3.24.3",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.16.4",
     "prisma": "^6.7.0",
