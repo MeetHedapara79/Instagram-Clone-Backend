@@ -65,7 +65,7 @@ export const putImage = async (
       contentType = "video/webm";
       break;
     default:
-      contentType = "application/octet-stream"; // fallback for unknown types
+      contentType = "application/octet-stream";
   }
 
   await s3client.send(listCommand);

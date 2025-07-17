@@ -9,7 +9,7 @@ export const handleApiResponse = <T extends z.ZodTypeAny>(
   try {
     const parsed = schema.safeParse(data);
     if (parsed.success) {
-      return parsed.data; // Return the validated data directly
+      return parsed.data;
     } else {
       res
         .status(500)

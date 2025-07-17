@@ -35,7 +35,6 @@ io.on('connection', (socket) => {
   // Listen for a message to be sent
   socket.on('send_message', async (data) => {
     const { senderId, receiverId, content, postId } = data;
-    console.log("🚀 ~ socket.on ~ postId:", postId)
 
     try {
       // Create the new message
@@ -57,8 +56,6 @@ io.on('connection', (socket) => {
     
         io.to(newMessage.conversationId).emit('new_message', newMessage);
         
-        // Emit the new message to the sender as well, if you want to update their UI
-        // socket.emit('new_message', newMessage);
       } else {
         console.error('Error: newMessage does not have a content property:', newMessage);
       }

@@ -13,14 +13,7 @@ import { putImage } from "../utils/uploadPost";
 
 export const createStory = async (req: Request, res: Response) => {
   try {
-    // const { userId, mediaUrl, caption, type } = req.body;
-    // const story = await createStoryService(userId, mediaUrl, caption, type);
-    // res
-    //   .status(responseStatusCode.success)
-    //   .json({ data: story, message: translation.STORY_CREATED });
-    // return;
     const { userId, type, caption } = req.body;
-    console.log("🚀 ~ createStory ~ userId:", userId)
     const mediaUrl = req.file;
 
     const user = await getUserById(userId);

@@ -29,7 +29,6 @@ export const verifyPwd = async (req:Request, res:Response, next:NextFunction) =>
                 const userData = await signtoken({username:getUser.username, id:getUser.id, email:getUser.email_phone});
                 const parts = userData.split(".");
                 const signature = parts[2];
-                console.log("🚀 ~ verifyPwd ~ signature:", signature)
                 
                 if (signature) {
                     await redis.set(`user:${getUser.id}:signature`, signature, 'EX', 86400);

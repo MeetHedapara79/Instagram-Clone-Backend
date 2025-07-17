@@ -128,12 +128,8 @@ export const confirmFollow = async(req:Request, res:Response) => {
         if(user1 && user2){
             const updateStatus = await updateConfirmStatus(followerId, followingId);
             if(updateStatus){
-                // const updateFollowerList = await updateUser(user2.id, {followers: user1.id});
-                // const updateFollowingList = await updateUser(user1.id, {following: user2.id});
-                // if(updateFollowerList && updateFollowingList){
-                    res.status(responseStatusCode.success).json({ message: translation.FOLLOW_REQUEST_ACCEPTED });
-                    return;
-                // }
+                res.status(responseStatusCode.success).json({ message: translation.FOLLOW_REQUEST_ACCEPTED });
+                return;
             }
             else{
                 res.status(responseStatusCode.failure).json({ message: translation.FOLLOW_REQUEST_NOT_ACCEPTED });
