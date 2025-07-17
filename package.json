@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec ts-node src/index.ts",
-    "build": "tsc",
-    "start:prod": "node dist/index.js"
+    "build": "npx prisma generate --schema=src/prisma/schema.prisma && tsc && cp -r src/generated dist/generated",
+    "start:prod": "npm run build && node dist/index.js",
+    "generate": "prisma generate --schema=src/prisma/schema.prisma"
   },
   "author": "",
   "license": "ISC",
