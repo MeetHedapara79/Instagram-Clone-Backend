@@ -1,4 +1,4 @@
-import { JsonValue } from "@prisma/client/runtime/library";
+import { JsonValue } from "../generated/prisma/runtime/library";
 
 export interface User {
     password: string;
