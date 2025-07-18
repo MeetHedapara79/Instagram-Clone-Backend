@@ -12,7 +12,22 @@ import http from 'http';
 import { createMessageService } from './services/chat.service';
 
 const app = express();
-app.use(cors({origin:"http://localhost:4200", credentials:true}));
+const allowedOrigins = [
+  "https://localhost:4200",
+  "https://instagram-clone-frontend-production.up.railway.app",
+  "http://localhost:4200",
+  "http://instagram-clone-frontend-production.up.railway.app"
+];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(express.json());
 const server = http.createServer(app);
