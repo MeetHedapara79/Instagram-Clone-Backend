@@ -40,11 +40,9 @@ const PORT = process.env['PORT'] || 3000;
 
 const onlineUsers = new Map<string, string>();
 io.on('connection', (socket) => {
-  console.log('A user connected: ' + socket.id);
 
   socket.on('register_user', (userId: string) => {
     onlineUsers.set(userId, socket.id);
-    console.log(`User ${userId} registered with socket ${socket.id}`);
   });
 
   // Listen for a message to be sent
@@ -65,7 +63,6 @@ io.on('connection', (socket) => {
           const receiverSocket = io.sockets.sockets.get(receiverSocketId);
           if (receiverSocket) {
             receiverSocket.join(newMessage.conversationId);
-            console.log(`Receiver ${receiverId} auto-joined room ${newMessage.conversationId}`);
           }
         }
     
@@ -82,11 +79,9 @@ io.on('connection', (socket) => {
   // Handle user joining a conversation for real-time updates
   socket.on('join_conversation', (conversationId) => {
     socket.join(conversationId);
-    console.log(`User joined conversation: ${conversationId}`);
   });
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected: ' + socket.id);
     // Remove user from online map
     for (const [userId, socketId] of onlineUsers.entries()) {
       if (socketId === socket.id) {

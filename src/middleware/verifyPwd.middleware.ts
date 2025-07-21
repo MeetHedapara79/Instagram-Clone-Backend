@@ -37,7 +37,7 @@ export const verifyPwd = async (req:Request, res:Response, next:NextFunction) =>
                 }
                 
                 res.cookie("authToken", userData, {
-                    secure: process.env["NODE_ENV"] === "production",
+                    secure: true,
                     sameSite: "none",
                     maxAge: 1000 * 60 * 60 * 24,
                 });
