@@ -44,6 +44,7 @@ export const verifyPwd = async (req:Request, res:Response, next:NextFunction) =>
                 });
 
                 req._user = getUser;
+                (req as any)._token = userData;
                 next();
             }
             else{

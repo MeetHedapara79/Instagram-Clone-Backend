@@ -47,8 +47,9 @@ export const registerUser = async (req:Request, res:Response) => {
 export const signinUser = async (req:Request, res:Response) => {
     try{
         const getUser = req._user;
+        const token = (req as any)._token;
         if(getUser){
-            res.status(responseStatusCode.success).json({ data: getUser, message: translation.USER_SIGNIN_SUCCESSFULLY });
+            res.status(responseStatusCode.success).json({ data: getUser, authToken: token, message: translation.USER_SIGNIN_SUCCESSFULLY });
             return;
         }
         else{
