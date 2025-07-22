@@ -91,7 +91,8 @@ export const getAllActiveStoriesService = async () => {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        // createdAt: 'asc',
+        userId: 'asc',
       },
       include: {
         user: {
